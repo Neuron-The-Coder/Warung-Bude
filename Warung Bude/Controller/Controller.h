@@ -5,12 +5,12 @@
 #include <stdlib.h>
 #include "../Model/Model.h"
 
-void Entt(){
+void Entt(){ //Press ENTER thing
     puts("Press ENTER to continue");
     getchar();
 }
 
-int isValidName (char * word){
+int isValidName (char * word){ //Cek apakah nama gaada uppercase
 
     int no = 0;
     for (int i=0; word[i] != '\0'; i++){
@@ -23,7 +23,7 @@ int isValidName (char * word){
 
 }
 
-Dish *newDish(char *name, int price, int qty){
+Dish *newDish(char *name, int price, int qty){ //Buat dish baru (utk menu atau orderan)
     Dish *temp = (Dish*) malloc (sizeof (Dish));
     strcpy(temp->name, name);
     temp->price = price;
@@ -35,7 +35,7 @@ Dish *newDish(char *name, int price, int qty){
     return temp;
 }
 
-Customer *newCustomer (char *names){
+Customer *newCustomer (char *names){ //Buat customer
     Customer *temp = (Customer *) malloc (sizeof (Customer));
     strcpy(temp->name, names);
     temp->headOrder = NULL;
@@ -45,7 +45,7 @@ Customer *newCustomer (char *names){
     return temp;
 }
 
-void PushDish(char* newname, int newprice, int newstock){
+void PushDish(char* newname, int newprice, int newstock){ //Push Dish ke Menu
     Dish *temp = newDish((char *) newname, newprice, newstock);
     if (!headDish){
         headDish = tailDish = temp;
@@ -57,7 +57,7 @@ void PushDish(char* newname, int newprice, int newstock){
     }
 }
 
-int ShowDish(){
+int ShowDish(){ //Print semua dish yang ada
     if (!headDish){
         puts("Nothing Here");
         return -1;
@@ -78,7 +78,7 @@ int ShowDish(){
     }
 }
 
-void OSwhat(){
+void OSwhat(){ //Define ini OS apa
 	printf ("System OS: ");	
 	#ifdef _WIN32
 		puts ("Windows 32-bit");
@@ -97,7 +97,7 @@ void OSwhat(){
   	#endif
 }
 
-void Date(){
+void Date(){ //Print date
 	
 	time_t a; //declare var utk waktu
 	struct tm *b; //declare nama struct 
@@ -112,7 +112,7 @@ void Date(){
 
 }
 
-int RemoveDish(char * gudbai){
+int RemoveDish(char * gudbai){ //Remove dish dari menu
 
     if (headDish && headDish == tailDish && strcmp(gudbai, headDish->name) == 0){
         headDish = tailDish = NULL;
@@ -154,7 +154,7 @@ int RemoveDish(char * gudbai){
     }
 }
 
-int DJB (char* name){
+int DJB (char* name){ //DJB
     int hashed = 5381;
     int c;
 
@@ -164,7 +164,7 @@ int DJB (char* name){
     return (hashed % 26);
 }
 
-void PushCustomer(char *name){
+void PushCustomer(char *name){ //Push new customer ke hashtable
     Customer *temp = newCustomer((char*) name);
     int idx = DJB((char*) name);
 
@@ -178,7 +178,7 @@ void PushCustomer(char *name){
     }
 }
 
-bool isValidCustomer(char * newname){
+bool isValidCustomer(char * newname){ //Customer ini ada ga?
     bool ok = true;
     for (int i=0; newname[i]!= '\0'; i++){
         if (newname[i] == ' ' || isdigit(newname[i])){
@@ -189,7 +189,7 @@ bool isValidCustomer(char * newname){
     return ok;
 }
 
-int FindCustomer(char * name){
+int FindCustomer(char * name){ //Cari customer pakek DJB dan traverse LL
     int idx = DJB((char *) name);
     int res = 0;
     Customer *now = headCustomer[idx];
@@ -204,7 +204,7 @@ int FindCustomer(char * name){
 
 }
 
-void PrintCustomer(){
+void PrintCustomer(){ //Print semua customer (i untuk index)
     int empty = 0;
 
     for (int i=0; i<26; i++){
@@ -221,7 +221,7 @@ void PrintCustomer(){
     }
 }
 
-int PushOrder (char* name, char* dishname, int dishamount){
+int PushOrder (char* name, char* dishname, int dishamount){ //Push order ke customer (masih pakek struct Dish krn gaada bedanya:))
 
     //cek apakah nama makanan ada
     Dish *now = headDish;
@@ -252,7 +252,7 @@ int PushOrder (char* name, char* dishname, int dishamount){
     return 1;
 }
 
-void PopOrder (Customer *baii){
+void PopOrder (Customer *baii){ //Pop semua orderan customer setelah checkout biar popcustomer aman :)
 
     //pophead
 
@@ -275,7 +275,7 @@ void PopOrder (Customer *baii){
 
 }
 
-void PopCustomer(int idx, Customer *baii){
+void PopCustomer(int idx, Customer *baii){ //Pop customer 
 
     //Jika cuma satu elemen
     if (baii == headCustomer[idx] && baii == tailCustomer[idx]){
@@ -313,7 +313,7 @@ void PopCustomer(int idx, Customer *baii){
 
 }
 
-int Checks(char * name){
+int Checks(char * name){ //Ini buat option Checkout
 
     int idx = DJB((char *) name);
     
@@ -342,11 +342,11 @@ int Checks(char * name){
 
 }
 
-void CLS(){
+void CLS(){ //CLS
     puts("\n\n\n\n\n\n\n\n\n\n");
 }
 
-void PrintSplash(){
+void PrintSplash(){ //Print splash
 
     FILE *oof = fopen("splash-screen.txt", "r");
     if (!oof) puts("Splash not found :(");
@@ -357,4 +357,5 @@ void PrintSplash(){
             printf ("%s\n", temp);
         }
     }
+    fclose(oof);	
 }
