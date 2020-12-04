@@ -4,12 +4,6 @@ struct Dish {
     Dish *prev, *next;
 }*headDish = NULL, *tailDish = NULL;
 
-// struct Order {
-//     char name[255];
-//     int quantity, stock;
-//     Order *prev, *next;
-// };
-
 struct Customer {
     char name[255];
     Dish *headOrder, *tailOrder; //LL nya order;
